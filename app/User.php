@@ -26,4 +26,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public $incrementing = false;
+    public $keyType = 'string';
+
+
+    /**
+     ** Overrides the method to ignore the remember token.
+     **/
+    public function setAttribute($key, $value) {
+      $isRememberTokenAttribute = $key == 'remember_token';
+
+      if (!$isRememberTokenAttribute)
+        parent::setAttribute($key, $value);
+
+    }
 }
