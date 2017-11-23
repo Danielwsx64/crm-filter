@@ -62,7 +62,7 @@ class LoginController extends Controller
       return view('auth.login', [ 'name' => $user_name, 'error' => 'Usuário ou senha inválidos' ]);
 
     \Illuminate\Support\Facades\Auth::login($user);
-    return redirect($this->redirectTo);
+    return redirect()->intended('defaultpage');
 
   }
 }

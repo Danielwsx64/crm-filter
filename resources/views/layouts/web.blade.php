@@ -8,6 +8,10 @@
     @include('layouts.web.sidebar')
 @endsection
 
-@section('main-start', '<main class="ls-main">')
+@section('main-start')
+  {!! '<main class="ls-main">' !!}
+@endsection
 
-@section('main-end', '</main>')
+@section('main-end')
+  {!! '</main>' !!}
+@endsection
