@@ -1,69 +1,61 @@
-@extends('layouts.app')
+@extends('layouts.web.base')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+@section('main')
+<div class="ls-login-parent">
+  <div class="ls-login-inner">
+    <div class="ls-login-container">
+      <div class="ls-login-box">
+        <h1 class="ls-login-logo"><img title="Logo login" src="images/company_logo.png" /></h1>
+        <form role="form" class="ls-form ls-login-form" method="POST" action="{{ route('login') }}">
+          {{ csrf_field() }}
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+          <fieldset>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+            <label class="ls-label">
+              <b class="ls-label-text ls-hidden-accessible">Usuário</b>
+              <input name="name" class="ls-login-bg-user ls-field-lg" type="text" value="{{ isset($name) ? $name : '' }}" placeholder="Usuário" required autofocus>
+            </label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+            <label class="ls-label">
+              <b class="ls-label-text ls-hidden-accessible">Senha</b>
+              <div class="ls-prefix-group ls-field-lg">
+                <input id="password_field" name="password" class="ls-login-bg-password" type="password" placeholder="Senha" required>
+                <a class="ls-label-text-prefix ls-toggle-pass ls-ico-eye" data-toggle-class="ls-ico-eye, ls-ico-eye-blocked" data-target="#password_field" href="#"></a>
+              </div>
+            </label>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+            <input type="submit" value="Entrar" class="ls-btn-primary ls-btn-block ls-btn-lg">
+          </fieldset>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+          @if ( isset( $error ) )
+            <div class="ls-txt-center" style="color: #d75553"> {{ $error }} </div>
+          @endif
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+
+@endsection
+
+@section('page_custom_assets')
+<script>
+  $(document).ready(function(){
+
+    $.get( '{{ route ('background_url') }}', function( url ) {
+
+      css_url = 'URL(' + url + ')';
+
+      if(url != 'not found') {
+        $('.ls-login-parent').fadeTo('slow', 0.3, function() {
+              $(this).css('background-image', css_url);
+
+        }).fadeTo('slow', 1);
+      }
+
+    });
+
+  });
+  </script>
 @endsection
