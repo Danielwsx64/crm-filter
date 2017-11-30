@@ -1,12 +1,10 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/teste', 'UsersController@index');
+Route::get('/Dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 

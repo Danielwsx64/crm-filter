@@ -4,11 +4,13 @@
   <div class="ls-notification-topbar">
 
     <!-- Links de apoio -->
+    <!--
     <div class="ls-alerts-list">
       <a href="#" class="ls-ico-bell-o" data-counter="8" data-ls-module="topbarCurtain" data-target="#ls-notification-curtain"><span>Notificações</span></a>
       <a href="#" class="ls-ico-bullhorn" data-ls-module="topbarCurtain" data-target="#ls-help-curtain"><span>Ajuda</span></a>
       <a href="#" class="ls-ico-question" data-ls-module="topbarCurtain" data-target="#ls-feedback-curtain"><span>Sugestões</span></a>
     </div>
+    -->
 
     @include('layouts.web.user-menu')
 
@@ -20,9 +22,8 @@
 
   <!-- Nome do produto/marca com sidebar -->
     <h1 class="ls-brand-name">
-      <a href="home" class="ls-ico-earth">
-        <small>Uma descrição ou outro nome</small>
-        O nome do Produto
+      <a href="/">
+        <img title="Company logo" src="images/company_logo.png" />
       </a>
     </h1>
 
