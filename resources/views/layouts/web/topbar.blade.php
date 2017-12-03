@@ -18,12 +18,12 @@
 
   <span class="ls-show-sidebar ls-ico-menu"></span>
 
-  <a href="#"  class="ls-go-next"><span class="ls-text">Voltar à lista de serviços</span></a>
+  <a href="{{ route('dashboard') }}"  class="ls-go-next"><span class="ls-text">Dashboard</span></a>
 
   <!-- Nome do produto/marca com sidebar -->
     <h1 class="ls-brand-name">
       <a href="/">
-        <img title="Company logo" src="images/company_logo.png" />
+        <img title="Company logo" src="{{ asset('images/company_logo.png') }}" />
       </a>
     </h1>
 

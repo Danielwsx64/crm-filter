@@ -1,0 +1,23 @@
+/* Oppotunities filter */
+.select-multiple {
+  min-height: 100px;
+}
+
+.select-multiple:after {
+  display: none;
+}
+
+.select-multiple:before {
+  display: none;
+}
+
+.select-multiple .ls-select {
+  padding-right: 10px;
+  height: 100%;
+}
+
+.select-multiple .ls-select option{
+  width: 100%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

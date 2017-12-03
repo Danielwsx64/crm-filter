@@ -13,5 +13,6 @@
 @endsection
 
 @section('main-end')
+  @include('layouts.web.footer')
   {!! '</main>' !!}
 @endsection

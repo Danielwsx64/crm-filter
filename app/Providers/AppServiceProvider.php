@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
   public function register()
   {
     // Custom Helpers
-    require_once __DIR__ . '/../Http/Helpers/auth.php';
+    require_once __DIR__ . '/../Http/Helpers/auth_helper.php';
+    require_once __DIR__ . '/../Http/Helpers/opportunities_helper.php';
 
   }
 }

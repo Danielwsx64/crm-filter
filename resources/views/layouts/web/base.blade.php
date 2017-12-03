@@ -9,6 +9,8 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    @yield('page_custom_metas')
+
     @include('layouts.web.head-assets')
 
   </head>
@@ -22,6 +24,8 @@
       @yield('main')
 
     @yield('main-end')
+
+    @yield('footer')
 
     @include('layouts.web.footer-assets')
   </body>
