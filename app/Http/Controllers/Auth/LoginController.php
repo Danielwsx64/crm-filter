@@ -48,9 +48,14 @@ class LoginController extends Controller
 
     $user = User::where('user_name', $user_name)->first();
 
+    if ( ! $user )
+      return view('auth.login', [ 'name' => $user_name, 'error' => 'Usuário ou senha inválidos' ]);
+
+    if ( ! $user->is_admin )
+      return view('auth.login', [ 'name' => $user_name, 'error' => 'Usuário não autorizado' ]);
+
     $password_md5 = md5($password);
     $user_hash = $user->user_hash;
-
 
     // Old way to validate SugarCRM pass - just md5 password
     if( $user_hash[0] != '$' && strlen($user_hash) == 32 )
@@ -63,6 +68,5 @@ class LoginController extends Controller
 
     \Illuminate\Support\Facades\Auth::login($user);
     return redirect()->intended('/');
-
   }
 }
