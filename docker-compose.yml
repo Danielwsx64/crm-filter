@@ -1,0 +1,17 @@
+version: '2'
+services:
+  crm_filter:
+    image: danielws/laravel:PHP7.0_LAR1.4_COM1.5
+    working_dir: /var/www/html/crm-filter
+    volumes:
+      - .:/var/www/html/crm-filter
+    command: make serve
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=inicial1234
+

@@ -1,0 +1,10 @@
+#! /bin/bash
+
+PASSWORD=inicial1234
+
+mysql -u root -h db --password=$PASSWORD << EOF
+DROP DATABASE IF EXISTS suite_crm;
+CREATE DATABASE suite_crm;
+EOF
+
+mysql -u root -h db --password=$PASSWORD suite_crm < suitecrm.sql
