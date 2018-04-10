@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 
-// use App\Account;
-// use App\AccountOpportunity;
 use App\Opportunity;
 use App\User;
 use App\Development;
@@ -22,19 +20,24 @@ class OpportunityController extends Controller
   var $orderBase;
 
   public function __construct() {
-    // $this->middleware('auth');
-    $this->middleware('auth')->except('filter');
+    // $this->middleware('auth')->except('filter');
+    $this->middleware('auth');
     $this->queryBase = OpportunityController::get_query_base();
     $this->selectBase = OpportunityController::get_select_base();
   }
 
 
   public function index () {
-
     $developments = Development::select('name')->orderBy('name')->get();
-    $users = User::select('first_name', 'last_name')->where('deleted', '=', 0)->orderBy('first_name')->get();
-    $sales_stages = Opportunity::select('sales_stage')->groupBy('sales_stage')->orderBy('sales_stage')->get();
-    $lead_sources = Opportunity::select('lead_source')->groupBy('lead_source')->orderBy('lead_source')->get();
+
+    $users = User::select('first_name', 'last_name')
+      ->where('deleted', '=', 0)->orderBy('first_name')->get();
+
+    $sales_stages = Opportunity::select('sales_stage')
+      ->groupBy('sales_stage')->orderBy('sales_stage')->get();
+
+    $lead_sources = Opportunity::select('lead_source')
+      ->groupBy('lead_source')->orderBy('lead_source')->get();
 
     return view('opportunity.index',
       [ 'developments' => $developments, 'users' => $users,
