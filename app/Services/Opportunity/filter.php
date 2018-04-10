@@ -67,16 +67,14 @@ class Filter
         $this->add_whereIn( $this->whereBase, $value, $filters[$key] );
   }
 
-  private function set_pagination($list_size = 15, $list_page = 1) {
-    if( !$list_size )
-      $list_size = 15;
+  private function set_pagination($size = 15, $page = 1) {
+    $size = !$size ? 15 : $size;
 
-    if( !$list_page )
-      $list_page = 1;
+    $page = !$page ? 1: $page;
 
-    $start = ($list_page * $list_size) - $list_size;
+    $start = ($page * $size) - $size;
 
-    $this->paginationBase = " LIMIT $start, $list_size";
+    $this->paginationBase = " LIMIT $start, $size";
   }
 
   private function set_order($order = null) {

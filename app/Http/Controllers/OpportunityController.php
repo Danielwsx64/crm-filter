@@ -9,6 +9,9 @@ use App\Opportunity;
 use App\User;
 use App\Development;
 
+use App\Services\Opportunity\Filter;
+use App\Services\Opportunity\Exporter;
+
 class OpportunityController extends Controller
 {
   public function __construct() {
@@ -49,14 +52,7 @@ class OpportunityController extends Controller
   public function filter ( Request $request ) {
     $params = $request->all();
 
-    $filter = new \App\Services\Opportunity\Filter(
-      Array(
-        'filters' => $this->filter_params($params),
-        'order' => isset($params['list_order']) ? $params['list_order'] : null,
-        'size' => isset($params['list_size']) ? $params['list_size'] : null,
-        'page' => isset($params['list_page']) ? $params['list_page'] : null
-      )
-    );
+    $filter = new Filter($this->filter_options($params));
 
     $opportunities_count = $filter->count();
     $opportunities = $filter->run();
@@ -81,113 +77,39 @@ class OpportunityController extends Controller
   }
 
   public function export ( Request $request ) {
-    $params = $request->all();
+    $filter_options = $this->filter_options( $request->all() );
 
-    $filter = new \App\Services\Opportunity\Filter(
-      Array(
-        'filters' => $this->filter_params($params),
-        'order' => isset($params['list_order']) ? $params['list_order'] : null,
-        'size' => isset($params['list_size']) ? $params['list_size'] : null,
-        'page' => isset($params['list_page']) ? $params['list_page'] : null
-      )
+    $opportunities = (new Filter($filter_options))->run($filter_options);
+
+    $filename = (new Exporter($opportunities, "opportunities.csv"))->run();
+
+    return response()->download(
+      $filename, $filename, array( 'Content-Type' => 'text/csv')
     );
-
-    if ( $request->input('export') == 'all' )
-      $opportunities = $filter->run(['with_patination' => false]);
-    else
-      $opportunities = $filter->run();
-
-    $filename = "opportunities.csv";
-    $handle = fopen($filename, 'w');
-
-    fputcsv($handle, array(
-      'contact_name',
-      'contact_last_name',
-      'street',
-      'city',
-      'state',
-      'postalcode',
-      'country',
-      'alt_street',
-      'alt_city',
-      'alt_state',
-      'alt_postalcode',
-      'alt_country',
-      'phone',
-      'celphone',
-      'work',
-      'other',
-      'fax',
-      'email',
-      'alt_email',
-      'other_email',
-      'opportunity',
-      'account',
-      'development',
-      'user_name',
-      'user_last_name',
-      'assigned_name',
-      'assigned_last_name',
-      'sales_stage',
-      'lead_source',
-    ));
-
-    foreach($opportunities as $opportunity) {
-      fputcsv($handle, array(
-        $opportunity->contact_name,
-        $opportunity->contact_last_name,
-        $opportunity->street,
-        $opportunity->city,
-        $opportunity->state,
-        $opportunity->postalcode,
-        $opportunity->country,
-        $opportunity->alt_street,
-        $opportunity->alt_city,
-        $opportunity->alt_state,
-        $opportunity->alt_postalcode,
-        $opportunity->alt_country,
-        $opportunity->phone,
-        $opportunity->celphone,
-        $opportunity->work,
-        $opportunity->other,
-        $opportunity->fax,
-        $opportunity->email,
-        $opportunity->alt_email,
-        $opportunity->other_email,
-        $opportunity->opportunity,
-        $opportunity->account,
-        $opportunity->development,
-        $opportunity->user_name,
-        $opportunity->user_last_name,
-        $opportunity->assigned_name,
-        $opportunity->assigned_last_name,
-        $opportunity->sales_stage,
-        $opportunity->lead_source,
-
-      ));
-    }
-
-    fclose($handle);
-
-
-    $headers = array( 'Content-Type' => 'text/csv');
-
-    return response()->download($filename, $filename, $headers);
   }
 
 
   // Private
 
+  private function filter_options($params) {
+    return Array(
+      'filters' => $this->filter_params($params),
+      'order' => isset($params['list_order']) ? $params['list_order'] : null,
+      'size' => isset($params['list_size']) ? $params['list_size'] : null,
+      'page' => isset($params['list_page']) ? $params['list_page'] : null,
+      'with_patination' => isset($params['export']) ?
+      $this->check_pagination($params['export']) : false
+    );
+  }
+
+  private function check_pagination($arg) {
+    return $arg == 'page' ? true : false;
+  }
 
   private function filter_params($params) {
     $permited_filters = array(
-      'opportunity_name',
-      'account_name',
-      'user_owner',
-      'assigned',
-      'development',
-      'sales_stage',
-      'lead_source'
+      'opportunity_name', 'account_name', 'user_owner', 'assigned',
+      'development', 'sales_stage', 'lead_source'
     );
 
     $params = collect($params);
