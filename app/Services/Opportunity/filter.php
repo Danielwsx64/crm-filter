@@ -166,7 +166,8 @@ class Filter
                    assigned_user.first_name            AS assigned_name,
                    assigned_user.last_name             AS assigned_last_name,
                    opt.lead_source                     AS lead_source,
-                   opt.sales_stage                     AS sales_stage";
+                   opt.sales_stage                     AS sales_stage,
+                   close_motivation.name               AS close_motivation";
   }
 
   private function get_query_base() {
@@ -198,6 +199,10 @@ class Filter
                    INNER JOIN opportunities_cstm AS opportunity_user
                            ON ( opt.id = opportunity_user.id_c )
                    INNER JOIN users AS responsible_user
-                           ON ( opportunity_user.user_id_c = responsible_user.id )";
+                           ON ( opportunity_user.user_id_c = responsible_user.id )
+                   LEFT JOIN moc_motivation_of_closing_opportunities_c AS opportunity_close_motivation
+                           ON ( opt.id = opportunity_close_motivation.moc_motivation_of_closing_opportunitiesopportunities_idb )
+                   LEFT JOIN moc_motivation_of_closing AS close_motivation
+                           ON ( close_motivation.id = opportunity_close_motivation.moc_motiva8482closing_ida )";
   }
 }

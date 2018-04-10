@@ -12,7 +12,7 @@ class Exporter
     'alt_country', 'phone', 'celphone', 'work', 'other', 'fax', 'email',
     'alt_email', 'other_email', 'opportunity', 'account', 'development',
     'user_name', 'user_last_name', 'assigned_name', 'assigned_last_name',
-    'sales_stage', 'lead_source',
+    'sales_stage', 'lead_source', 'close_motivation',
   ];
 
   public function __construct($opportunities, $filename = 'opportunities.csv') {
