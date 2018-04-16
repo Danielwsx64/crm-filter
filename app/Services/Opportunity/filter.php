@@ -48,6 +48,7 @@ class Filter
       'development' => 'development.name',
       'sales_stage' => 'opt.sales_stage',
       'lead_source' => 'opt.lead_source',
+      'close_motivation' => 'close_motivation.name',
     );
 
     if ( $filters->isEmpty() )

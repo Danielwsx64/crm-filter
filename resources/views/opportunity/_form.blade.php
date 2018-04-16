@@ -77,6 +77,22 @@
     </label>
 
     <label class="ls-label col-md-3 col-sm-4 col-xs-12">
+      <b class="ls-label-text">Motivo Fechamento</b>
+      <div class="ls-custom-select select-multiple">
+        <select multiple class="ls-select" name="close_motivation">
+          <option value=""></option>
+          @foreach($close_motivations as $close_motivation)
+            @if($close_motivation->name != null)
+              <option value="{{ $close_motivation->name }}">
+              {{ $close_motivation->name }}
+              </option>
+            @endif
+          @endforeach
+        </select>
+      </div>
+    </label>
+
+    <label class="ls-label col-md-3 col-sm-4 col-xs-12">
       <b class="ls-label-text">Oportunidade</b>
       <input type="text" name="opportunity_name" placeholder="Nome da Oportunidade" class="ls-field">
     </label>

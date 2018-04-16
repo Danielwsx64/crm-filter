@@ -1,5 +1,7 @@
 development:
 	devops/scripts/development/execute
+development-root:
+	devops/scripts/development/execute root
 development-run:
 	docker-compose up
 serve:

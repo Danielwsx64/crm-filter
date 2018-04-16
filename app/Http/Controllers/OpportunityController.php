@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Opportunity;
 use App\User;
 use App\Development;
+use App\CloseMotivation;
 
 use App\Services\Opportunity\Filter;
 use App\Services\Opportunity\Exporter;
@@ -39,12 +40,15 @@ class OpportunityController extends Controller
       ->orderBy('lead_source')
       ->get();
 
+    $close_motivations = CloseMotivation::select('name')->orderBy('name')->get();
+
     return $this->render_view(
       [
         'developments' => $developments,
         'users' => $users,
         'sales_stages' => $sales_stages,
-        'lead_sources' => $lead_sources 
+        'lead_sources' => $lead_sources,
+        'close_motivations' => $close_motivations
       ]
     );
   }
@@ -109,7 +113,7 @@ class OpportunityController extends Controller
   private function filter_params($params) {
     $permited_filters = array(
       'opportunity_name', 'account_name', 'user_owner', 'assigned',
-      'development', 'sales_stage', 'lead_source'
+      'development', 'sales_stage', 'lead_source', 'close_motivation'
     );
 
     $params = collect($params);
