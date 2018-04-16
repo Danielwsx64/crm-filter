@@ -24,4 +24,6 @@
   <li><b>Corretor Responsável: </b>{{  format_info($opportunity->user_name . ' ' . $opportunity->user_last_name) }}<br></li>
 
   <li><b>Atribuido à: </b>{{  format_info($opportunity->assigned_name . ' ' .  $opportunity->assigned_last_name) }}<br></li>
+
+  <li><b>Motivo Fechamento: </b>{{  format_info($opportunity->close_motivation) }}<br></li>
 </ul>
