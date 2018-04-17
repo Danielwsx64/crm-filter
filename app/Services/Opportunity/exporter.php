@@ -23,7 +23,7 @@ class Exporter
   public function run() {
     $handle = fopen($this->filename, 'w');
 
-    fputcsv($handle, $this->fields);
+    fputcsv($handle, $this->csv_titles());
 
     foreach($this->opportunities as $opportunity)
       fputcsv($handle, $this->opportunity_as_array($opportunity));
@@ -36,6 +36,14 @@ class Exporter
 
   // Private
 
+  private function csv_titles() {
+    $titles_array = Array();
+
+    foreach($this->fields as $field)
+      array_push($titles_array, __('opportunity.' . $field));
+
+    return $titles_array;
+  }
 
   private function opportunity_as_array($opportunity) {
     $opportunity_array = Array();
