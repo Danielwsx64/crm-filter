@@ -8,5 +8,5 @@ serve:
 	php artisan serve --host=0.0.0.0
 down:
 	docker-compose down
-database:
+setup-db:
 	devops/scripts/development/database

@@ -168,6 +168,7 @@ class Filter
                    assigned_user.last_name             AS assigned_last_name,
                    opt.lead_source                     AS lead_source,
                    opt.sales_stage                     AS sales_stage,
+                   hear_us.name                        AS hear_us,
                    close_motivation.name               AS close_motivation";
   }
 
@@ -204,6 +205,10 @@ class Filter
                    LEFT JOIN moc_motivation_of_closing_opportunities_c AS opportunity_close_motivation
                            ON ( opt.id = opportunity_close_motivation.moc_motivation_of_closing_opportunitiesopportunities_idb )
                    LEFT JOIN moc_motivation_of_closing AS close_motivation
-                           ON ( close_motivation.id = opportunity_close_motivation.moc_motiva8482closing_ida )";
+                           ON ( close_motivation.id = opportunity_close_motivation.moc_motiva8482closing_ida )
+                   LEFT JOIN whu_where_hear_us_opportunities_c AS opportunity_hear_us
+                           ON ( opt.id = opportunity_hear_us.whu_where_hear_us_opportunitiesopportunities_idb )
+                   LEFT JOIN whu_where_hear_us AS hear_us
+                           ON ( hear_us.id = opportunity_hear_us.whu_where_hear_us_opportunitieswhu_where_hear_us_ida )";
   }
 }
